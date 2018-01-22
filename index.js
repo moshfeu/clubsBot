@@ -41,9 +41,9 @@ bot.on('message', (msg) => {
   console.log('-----',msg.text);
   if (msg.text === '/start') {
     bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
-  }
-
-  if (msg.text === '/give_me_a_compliment') {
+  } else if (msg.text.includes('/give_me_a_compliment')) {
     bot.sendMessage(chatId, `You are ${['great', 'smart', 'handsome'][Math.floor(Math.random() * 3)]}!`);
+  } else {
+    bot.sendMessage(chatId, `${msg.from.first_name} ${msg.from.last_name}, be quiet!`);
   }
 });
