@@ -33,5 +33,12 @@ bot.on('message', (msg) => {
 
   // send a message to the chat acknowledging receipt of their message
   // bot.sendMessage(chatId, 'Received your message');
-  bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
+  console.log('-----',msg.text);
+  if (msg.text === '/start') {
+    bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
+  }
+
+  if (msg.text === '/give_me_a_compliment') {
+    bot.sendMessage(chatId, `You are ${['great', 'smart', 'handsome'][Math.floor(Math.random() * 3)]}!`);
+  }
 });
