@@ -1,7 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 
 // replace the value below with the Telegram token you receive from @BotFather
-const token = '524224286:AAFIlKTezfzOlI1zIp2BC30Ckg7H8B2pj5M';
+const botToken = '524224286:AAFIlKTezfzOlI1zIp2BC30Ckg7H8B2pj5M';
 
 // Create a bot that uses 'polling' to fetch new updates
 const options = process.env.prod ? {
@@ -11,7 +11,12 @@ const options = process.env.prod ? {
     } : {
       polling: true
     };
-const bot = new TelegramBot(token, options);
+const bot = new TelegramBot(botToken, options);
+if (process.env.prod) {
+  const appURL = 'https://wix-clubs-telebot.herokuapp.com/';
+  bot.setWebHook(`${appURL}bot${botToken}`);
+  console.log('setWebHook');
+}
 
 // Matches "/echo [whatever]"
 // bot.onText(/\/echo (.+)/, (msg, match) => {
