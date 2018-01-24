@@ -43,9 +43,34 @@ bot.on('message', (msg) => {
     bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
   } else if (msg.text.includes('/give_me_a_compliment')) {
     bot.sendMessage(chatId, `You are ${['great', 'smart', 'handsome'][Math.floor(Math.random() * 3)]}!`);
+  } else if (msg.text.includes('/love')) {
+    bot.sendMessage(chatId, `Do you love me? (I'm a robot, remember?`, {
+      reply_to_message_id: msg.message_id,
+      reply_markup: JSON.stringify({
+        keyboard: [
+          ['Yes, you are the bot of my life ❤'],
+          ['No, sorry there is another one...']
+        ]
+      })
+    });
+  } else if (msg.text.includes('/buttons')) {
+    bot.sendMessage(chatId, 'Buttons', {
+      reply_markup: {
+        inline_keyboard: [
+          [{
+            text: 'Sample button',
+            callback_data: '2'
+          }]
+        ]
+      }
+    });
   } else if (msg.chat.type === 'group') {
     bot.sendMessage(chatId, `${msg.from.first_name} ${msg.from.last_name}, be quiet!`);
   } else {
     bot.sendMessage(chatId, `You sent: ${msg.text}`);
   }
+
+  bot.on('callback_query', (message) => {
+    bot.sendMessage(message.message.chat.id, `The button's data is: ${message.data}`);
+  });
 });
