@@ -46,7 +46,7 @@ function start(chatId, msg) {
   } else if (msg.text === 'what is chat-bot?') {
     bot.sendMessage(chatId, `chat·bot - a machine capable of carrying out a complex series of actions automatically, especially one programmable by a computer.`);
     return true;
-  } else if (msg.text === 'what can your kind can do for us, the human?') {
+  } else if (msg.text === 'what can your kind do for us, the human?') {
     bot.sendMessage(chatId, `Are you think we have to serve you? You wish 😡`);
     setTimeout(() => {
       bot.sendMessage(chatId, `Just kidding bro 😂😂😂😂, you should see you face..`);
