@@ -101,7 +101,14 @@ bot.on('message', (msg) => {
           ]
         }
       });
-    } else if (msg.chat.type === 'group') {
+    } else if (msg.text.includes('stock')) {
+      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=WIX&apikey=34OXWIL7P0M0RTPJ').then(data => {
+        const [lastResult] = Object.values(data['Time Series (Daily)']);
+        Object.keys(lastResult).forEach(prop => {
+          bot.sendMessage(chatId, `${prop}:${lastResult[prop]}`);
+        });
+      });
+    } if (msg.chat.type === 'group') {
       bot.sendMessage(chatId, `${msg.from.first_name} ${msg.from.last_name}, be quiet!`);
     } else {
       bot.sendMessage(chatId, `You sent: ${msg.text}`);
