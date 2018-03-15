@@ -1,4 +1,6 @@
 const { setTimeout } = require('timers');
+const fetch = require("node-fetch");
+var values = require('object.values');
 
 const TelegramBot = require('node-telegram-bot-api');
 
@@ -75,6 +77,7 @@ function start(chatId, msg) {
 bot.on('message', (msg) => {
   const chatId = msg.chat.id;
 
+  console.log('stock', msg.text);
   if (!start(chatId, msg)) {
     // send a message to the chat acknowledging receipt of their message
     if (msg.text.includes('/give_me_a_compliment')) {
@@ -102,13 +105,22 @@ bot.on('message', (msg) => {
         }
       });
     } else if (msg.text.includes('stock')) {
-      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=WIX&apikey=34OXWIL7P0M0RTPJ').then(data => {
-        const [lastResult] = Object.values(data['Time Series (Daily)']);
-        Object.keys(lastResult).forEach(prop => {
-          bot.sendMessage(chatId, `${prop}:${lastResult[prop]}`);
+      try {
+        fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=WIX&apikey=34OXWIL7P0M0RTPJ').
+        then(res => res.json()).
+        then(data => {
+          const [lastResult] = values(data['Time Series (Daily)']);
+          Object.keys(lastResult).forEach(prop => {
+            bot.sendMessage(chatId, `${prop}:${lastResult[prop]}`);
+          });
+        }).
+        catch(e => {
+          console.log('catch',e);
         });
-      });
-    } if (msg.chat.type === 'group') {
+      } catch (error) {
+        console.log('error', error);
+      }
+    } else if (msg.chat.type === 'group') {
       bot.sendMessage(chatId, `${msg.from.first_name} ${msg.from.last_name}, be quiet!`);
     } else {
       bot.sendMessage(chatId, `You sent: ${msg.text}`);
