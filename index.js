@@ -39,7 +39,7 @@ if (process.env.prod) {
 // messages
 function start(chatId, msg) {
   if (msg.text === '/start') {
-    bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
+    // bot.sendDocument(chatId, 'http://i.giphy.com/QdXfVLeFgNvG.gif');
     bot.sendMessage(chatId, `Hi :)\nI'm the wixClubsBot but my friends call me @wixClubsBot.\nHow can I help you?`);
     return true;
   } else if (msg.text === 'what are you?') {
