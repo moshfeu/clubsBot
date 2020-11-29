@@ -17,7 +17,7 @@ const options = process.env.prod ? {
     };
 const bot = new TelegramBot(botToken, options);
 if (process.env.prod) {
-  const appURL = 'https://wix-clubs-telebot.herokuapp.com/';
+  const appURL = 'https://moshfeu-telebot.herokuapp.com/';
   bot.setWebHook(`${appURL}bot${botToken}`);
   console.log('setWebHook', appURL);
 }
